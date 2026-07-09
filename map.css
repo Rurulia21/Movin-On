@@ -1,4 +1,6 @@
-/* ---------- 共通 ---------- */
+/* ------------------------
+   共通設定
+------------------------ */
 
 *{
     margin:0;
@@ -17,443 +19,402 @@ body{
     "Yu Gothic",
     sans-serif;
 
-    background:#f5f5f5;
+    background:#f7f7f7;
     color:#222;
+
 }
 
 
-/* ---------- Header ---------- */
+/* ------------------------
+   戻るリンク
+------------------------ */
 
 header{
 
-    position:sticky;
-    top:0;
-
-    height:75px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:0 50px;
-
-    background:rgba(255,255,255,.85);
-
-    backdrop-filter:blur(12px);
-
+    padding:30px 8%;
     border-bottom:1px solid #ddd;
-
-    z-index:999;
+    background:white;
 
 }
 
 header a{
 
-    color:#444;
-
     text-decoration:none;
-
-    font-size:15px;
-
-    transition:.25s;
+    color:#333;
+    font-size:18px;
+    transition:.3s;
 
 }
 
 header a:hover{
 
-    color:black;
-
-}
-
-header h1{
-
-    font-size:20px;
-
-    font-weight:300;
-
-    letter-spacing:3px;
+    opacity:.5;
 
 }
 
 
+/* ------------------------
+   タイトル
+------------------------ */
 
-/* ---------- キャンバス ---------- */
+main{
 
-#canvas{
+    width:min(1200px,92%);
+    margin:auto;
+
+}
+
+h1{
+
+    text-align:center;
+
+    font-size:56px;
+
+    margin-top:60px;
+
+    letter-spacing:.08em;
+
+    font-weight:700;
+
+}
+
+.description{
+
+    text-align:center;
+
+    color:#777;
+
+    max-width:700px;
+
+    margin:25px auto 80px;
+
+    line-height:2;
+
+}
+
+
+/* ------------------------
+   マップ本体
+------------------------ */
+
+.map{
 
     position:relative;
 
-    width:100%;
+    width:700px;
+    height:700px;
 
-    min-height:calc(100vh - 75px);
-
-    overflow:auto;
-
-    padding:100px;
+    margin:0 auto 150px;
 
 }
 
 
-
-/* ---------- ノード ---------- */
+/* ------------------------
+   ノード
+------------------------ */
 
 .node{
 
     position:absolute;
 
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-}
-
-
-
-/* ---------- 円 ---------- */
-
-.circle{
-
-    width:150px;
-    height:150px;
+    width:130px;
+    height:130px;
 
     border-radius:50%;
 
-    background:white;
-
-    border:2px solid #222;
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    text-align:center;
+    border:none;
 
     cursor:pointer;
 
-    font-size:18px;
+    font-size:22px;
 
-    transition:.3s;
+    background:white;
 
-    box-shadow:
-    0 15px 30px rgba(0,0,0,.08);
-
-}
-
-.circle:hover{
-
-    transform:translateY(-6px);
+    color:#222;
 
     box-shadow:
-    0 25px 40px rgba(0,0,0,.15);
+    0 15px 40px rgba(0,0,0,.08);
+
+    transition:.35s;
 
 }
 
 
+/* ------------------------
+   ホバー
+------------------------ */
 
-/* ---------- Root ---------- */
+.node:hover{
 
-.root{
+    transform:
+    translateY(-8px)
+    scale(1.05);
+
+    box-shadow:
+    0 25px 50px rgba(0,0,0,.15);
+
+}
+
+
+/* ------------------------
+   真ん中
+------------------------ */
+
+.center{
 
     left:50%;
     top:50%;
 
-    transform:translate(-50%,-50%);
+    transform:
+    translate(-50%,-50%);
 
-}
+    width:170px;
+    height:170px;
 
-.root .circle{
-
-    width:180px;
-    height:180px;
-
-    background:#111;
+    background:#222;
 
     color:white;
 
-    font-size:28px;
-
-    border:none;
+    font-size:30px;
 
 }
 
 
+/* ------------------------
+   周囲
+------------------------ */
 
-/* ---------- メモ画面 ---------- */
+.hobby{
 
-#editor{
+    top:0;
+    left:50%;
+
+    transform:translateX(-50%);
+
+}
+
+.study{
+
+    top:170px;
+    right:0;
+
+}
+
+.future{
+
+    bottom:70px;
+    right:40px;
+
+}
+
+.other{
+
+    bottom:70px;
+    left:40px;
+
+}
+
+.relation{
+
+    top:170px;
+    left:0;
+
+}
+
+
+/* ------------------------
+   メモ画面
+------------------------ */
+
+.panel{
 
     position:fixed;
 
-    inset:0;
+    top:0;
+    right:-420px;
 
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    background:rgba(0,0,0,.4);
-
-    backdrop-filter:blur(4px);
-
-    z-index:1000;
-
-}
-
-
-
-.hidden{
-
-    display:none!important;
-
-}
-
-
-
-.window{
-
-    width:520px;
-
-    max-width:90%;
+    width:420px;
+    height:100vh;
 
     background:white;
 
-    border-radius:25px;
-
-    padding:35px;
-
     box-shadow:
-    0 30px 60px rgba(0,0,0,.2);
+    -20px 0 40px rgba(0,0,0,.12);
+
+    transition:.45s;
+
+    padding:40px;
+
+    z-index:100;
 
 }
 
 
+/* JSで付けるクラス */
 
-.window h2{
+.panel.open{
 
-    margin-bottom:20px;
-
-    font-weight:400;
+    right:0;
 
 }
 
+
+.panel-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+
+.panel-header h2{
+
+    font-size:30px;
+
+}
+
+
+#close{
+
+    border:none;
+
+    background:none;
+
+    font-size:32px;
+
+    cursor:pointer;
+
+}
 
 
 textarea{
 
     width:100%;
 
-    height:220px;
+    height:350px;
 
     resize:none;
 
-    padding:18px;
+    border:1px solid #ddd;
 
-    border:none;
+    padding:20px;
+
+    font-size:17px;
+
+    line-height:1.8;
 
     outline:none;
 
-    background:#f8f8f8;
-
-    border-radius:18px;
-
-    font-size:16px;
-
-    line-height:1.7;
+    border-radius:12px;
 
 }
 
 
+#save{
 
-/* ---------- ボタン ---------- */
+    margin-top:30px;
 
-.buttons{
+    width:100%;
 
-    margin-top:25px;
-
-    display:flex;
-
-    justify-content:flex-end;
-
-    gap:15px;
-
-}
-
-
-
-button{
+    height:55px;
 
     border:none;
 
-    cursor:pointer;
-
-    padding:13px 22px;
-
-    border-radius:40px;
-
-    background:#111;
+    background:#222;
 
     color:white;
 
-    transition:.25s;
-
-    font-size:15px;
-
-}
-
-
-
-button:hover{
-
-    background:#333;
-
-    transform:translateY(-2px);
-
-}
-
-
-
-/* ---------- スマホ ---------- */
-
-@media(max-width:768px){
-
-header{
-
-padding:0 20px;
-
-}
-
-header h1{
-
-font-size:16px;
-
-letter-spacing:1px;
-
-}
-
-.circle{
-
-width:110px;
-height:110px;
-
-font-size:15px;
-
-}
-
-.root .circle{
-
-width:140px;
-height:140px;
-
-font-size:22px;
-
-}
-
-.window{
-
-padding:20px;
-
-}
-
-textarea{
-
-height:170px;
-
-}
-
-}
-
-#mapArea{
-    position:relative;
-    width:100%;
-    height:80vh;
-    overflow:hidden;
-}
-
-
-#svgCanvas{
-    position:absolute;
-    width:100%;
-    height:100%;
-}
-
-
-#nodeContainer{
-    position:absolute;
-    width:100%;
-    height:100%;
-}
-
-
-.node{
-
-    position:absolute;
-
-    width:120px;
-    height:120px;
-
-    border:2px solid #000;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
+    font-size:18px;
 
     cursor:pointer;
+
+    border-radius:10px;
 
     transition:.3s;
 
 }
 
 
-.node:hover{
+#save:hover{
 
-    transform:scale(1.1);
-
-    background:#000;
-
-    color:#fff;
+    background:#444;
 
 }
 
 
-#editPanel{
+/* ------------------------
+   スマホ
+------------------------ */
 
-    position:fixed;
+@media(max-width:768px){
 
-    right:20px;
-    bottom:20px;
+    h1{
 
-    width:250px;
+        font-size:38px;
 
-    padding:20px;
+    }
 
-    background:#111;
+    .map{
 
-    color:white;
+        width:360px;
+        height:360px;
 
-}
+    }
 
+    .node{
 
-#editPanel input,
-#editPanel textarea{
+        width:82px;
+        height:82px;
 
-    width:100%;
+        font-size:15px;
 
-    margin-bottom:10px;
+    }
 
-}
+    .center{
 
+        width:115px;
+        height:115px;
 
-#editPanel textarea{
+        font-size:23px;
 
-    height:100px;
+    }
+
+    .study{
+
+        top:95px;
+
+    }
+
+    .relation{
+
+        top:95px;
+
+    }
+
+    .future{
+
+        bottom:15px;
+        right:10px;
+
+    }
+
+    .other{
+
+        bottom:15px;
+        left:10px;
+
+    }
+
+    .panel{
+
+        width:100%;
+        right:-100%;
+
+    }
 
 }

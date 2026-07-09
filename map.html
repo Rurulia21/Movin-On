@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 
 <meta charset="UTF-8">
@@ -12,124 +11,100 @@
 
 </head>
 
-
 <body>
-
 
 <header>
 
 <a href="index.html">
-← Movin' On
+← Movin' On に戻る
 </a>
-
-<h1>Self Discovery Map</h1>
 
 </header>
 
 
+<main>
+
+<h1>自己探究マップ</h1>
+
+<p class="description">
+自分の興味・将来・人間関係などを書き出し、
+自分自身を見つめ直すためのマップです。
+</p>
 
 
-<!-- マップエリア -->
+<div class="map">
 
-<div id="canvas">
+<button class="node center"
+data-node="self">
+自分
+</button>
 
 
-<!-- JSでノードを生成する場所 -->
+<button class="node hobby"
+data-node="hobby">
+趣味
+</button>
+
+
+<button class="node study"
+data-node="study">
+学業
+</button>
+
+
+<button class="node future"
+data-node="future">
+将来
+</button>
+
+
+<button class="node relation"
+data-node="relation">
+人間関係
+</button>
+
+
+<button class="node other"
+data-node="other">
+その他
+</button>
+
+</div>
+
+</main>
+
+
+<!-- メモ画面 -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+<h2 id="panel-title">
+タイトル
+</h2>
+
+<button id="close">
+×
+</button>
 
 </div>
 
 
-
-
-
-
-<!-- メモ編集画面 -->
-
-<div id="editor" class="hidden">
-
-
-<div class="window">
-
-
-<h2>編集</h2>
-
-
-
-<label>
-
-タイトル
-
-<input 
-id="title"
-type="text">
-
-</label>
-
-
-
-
-<label>
-
-メモ
-
-<textarea 
-id="memo"></textarea>
-
-</label>
-
-
-
-
-
-<div class="buttons">
+<textarea
+id="memo"
+placeholder="自由に書き込めます">
+</textarea>
 
 
 <button id="save">
-
 保存
-
 </button>
-
-
-
-<button id="add">
-
-枝を追加
-
-</button>
-
-
-
-<button id="close">
-
-閉じる
-
-</button>
-
-
-
-<button id="addNodeBtn">
-
-＋ ノード追加
-
-</button>
-
-
 
 </div>
-
-
-</div>
-
-
-</div>
-
-
 
 
 <script src="map.js"></script>
 
-
 </body>
-
 </html>
