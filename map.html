@@ -1,110 +1,473 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <meta charset="UTF-8">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>自己探究マップ</title>
+  <meta
+    name="description"
+    content="自分の興味や考えを枝分かれさせながら整理する自己探究マップ"
+  >
 
-<link rel="stylesheet" href="map.css">
+  <title>自己探究マップ | Movin' On</title>
 
+  <link rel="stylesheet" href="map.css">
+  <script src="map.js" defer></script>
 </head>
 
 <body>
 
-<header>
+  <!-- =========================
+       ヘッダー
+  ========================== -->
 
-<a href="index.html">
-← Movin' On に戻る
-</a>
+  <header class="app-header">
+    <div class="header-inner">
 
-</header>
+      <a href="index.html" class="back-link">
+        <span aria-hidden="true">←</span>
+        <span>Movin' On に戻る</span>
+      </a>
 
+      <p class="header-title">
+        Self Discovery Map
+      </p>
 
-<main>
-
-<h1>自己探究マップ</h1>
-
-<p class="description">
-自分の興味・将来・人間関係などを書き出し、
-自分自身を見つめ直すためのマップです。
-</p>
-
-
-<div class="map">
-
-<button class="node center"
-data-node="self">
-自分
-</button>
+    </div>
+  </header>
 
 
-<button class="node hobby"
-data-node="hobby">
-趣味
-</button>
+  <!-- =========================
+       メインコンテンツ
+  ========================== -->
+
+  <main class="page-container">
+
+    <!-- ページ説明 -->
+    <section class="intro" aria-labelledby="page-title">
+
+      <p class="intro-label">
+        MOVIN' ON / SELF DISCOVERY
+      </p>
+
+      <h1 id="page-title">
+        自己探究マップ
+      </h1>
+
+      <p class="intro-description">
+        「自分」を中心に、興味・学業・将来・人間関係などの考えを
+        枝分かれさせながら整理できます。
+        <br>
+        ノードを選択してメモを書き、そこから新しい項目を追加して、
+        自分だけの思考の地図を育ててください。
+      </p>
+
+    </section>
 
 
-<button class="node study"
-data-node="study">
-学業
-</button>
+    <!-- =========================
+         マップ操作エリア
+    ========================== -->
+
+    <section
+      class="workspace-section"
+      aria-label="自己探究マップ編集エリア"
+    >
+
+      <!-- 上部操作バー -->
+      <div class="map-toolbar">
+
+        <div class="toolbar-info">
+          <span class="toolbar-mark" aria-hidden="true"></span>
+
+          <p>
+            ノードを選択すると編集できます
+          </p>
+        </div>
+
+        <div class="toolbar-actions">
+
+          <button
+            type="button"
+            id="centerMapBtn"
+            class="toolbar-button"
+          >
+            中央に戻す
+          </button>
+
+          <button
+            type="button"
+            id="resetMapBtn"
+            class="toolbar-button toolbar-button-danger"
+          >
+            マップを初期化
+          </button>
+
+        </div>
+
+      </div>
 
 
-<button class="node future"
-data-node="future">
-将来
-</button>
+      <!-- マップ表示領域 -->
+      <div
+        id="mapViewport"
+        class="map-viewport"
+        tabindex="0"
+        aria-label="自己探究マップ"
+      >
+
+        <!--
+          mapCanvas全体をJSで移動・拡張する。
+          SVGとノードは同じ座標空間に配置する。
+        -->
+        <div id="mapCanvas" class="map-canvas">
+
+          <!-- 親子をつなぐ線 -->
+          <svg
+            id="connections"
+            class="connections"
+            aria-hidden="true"
+          >
+            <g id="connectionLayer"></g>
+          </svg>
+
+          <!-- JSがノードを生成する場所 -->
+          <div
+            id="nodeLayer"
+            class="node-layer"
+          ></div>
+
+        </div>
+
+      </div>
 
 
-<button class="node relation"
-data-node="relation">
-人間関係
-</button>
+      <!-- 操作説明 -->
+      <div class="map-guide">
+
+        <p>
+          <span aria-hidden="true">01</span>
+          ノードを選択
+        </p>
+
+        <p>
+          <span aria-hidden="true">02</span>
+          メモを入力
+        </p>
+
+        <p>
+          <span aria-hidden="true">03</span>
+          枝を追加
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
 
 
-<button class="node other"
-data-node="other">
-その他
-</button>
+  <!-- =========================
+       編集パネル背景
+  ========================== -->
 
-</div>
-
-</main>
-
-
-<!-- メモ画面 -->
-
-<div class="panel">
-
-<div class="panel-header">
-
-<h2 id="panel-title">
-タイトル
-</h2>
-
-<button id="close">
-×
-</button>
-
-</div>
+  <button
+    type="button"
+    id="panelBackdrop"
+    class="panel-backdrop"
+    aria-label="編集パネルを閉じる"
+    tabindex="-1"
+  ></button>
 
 
-<textarea
-id="memo"
-placeholder="自由に書き込めます">
-</textarea>
+  <!-- =========================
+       ノード編集パネル
+  ========================== -->
+
+  <aside
+    id="editorPanel"
+    class="editor-panel"
+    aria-hidden="true"
+    aria-labelledby="editorHeading"
+  >
+
+    <div class="editor-header">
+
+      <div>
+        <p class="editor-label">
+          SELECTED NODE
+        </p>
+
+        <h2 id="editorHeading">
+          ノードを選択
+        </h2>
+      </div>
+
+      <button
+        type="button"
+        id="closeEditorBtn"
+        class="icon-button"
+        aria-label="編集パネルを閉じる"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+    </div>
 
 
-<button id="save">
-保存
-</button>
+    <div class="editor-content">
 
-</div>
+      <!-- ノード名 -->
+      <div class="form-group">
+
+        <label for="nodeTitleInput">
+          項目名
+        </label>
+
+        <input
+          type="text"
+          id="nodeTitleInput"
+          maxlength="30"
+          autocomplete="off"
+          placeholder="項目名を入力"
+        >
+
+        <p class="input-note">
+          30文字以内で入力してください
+        </p>
+
+      </div>
 
 
-<script src="map.js"></script>
+      <!-- メモ -->
+      <div class="form-group form-group-memo">
+
+        <label for="nodeMemoInput">
+          メモ
+        </label>
+
+        <textarea
+          id="nodeMemoInput"
+          maxlength="2000"
+          placeholder="感じたこと、好きな理由、今後考えたいことなどを自由に書いてください"
+        ></textarea>
+
+        <div class="memo-information">
+
+          <p>
+            入力内容はこのブラウザに保存されます
+          </p>
+
+          <p id="memoCount">
+            0 / 2000
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- 更新情報 -->
+      <div class="node-information">
+
+        <div>
+          <span>階層</span>
+          <strong id="nodeDepth">0</strong>
+        </div>
+
+        <div>
+          <span>子項目</span>
+          <strong id="childCount">0</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 編集ボタン -->
+    <div class="editor-actions">
+
+      <button
+        type="button"
+        id="saveNodeBtn"
+        class="primary-button"
+      >
+        変更を保存
+      </button>
+
+      <button
+        type="button"
+        id="openChildDialogBtn"
+        class="secondary-button"
+      >
+        ＋ この項目から枝を追加
+      </button>
+
+      <button
+        type="button"
+        id="deleteNodeBtn"
+        class="danger-button"
+      >
+        この項目を削除
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================
+       子ノード追加ダイアログ
+  ========================== -->
+
+  <dialog
+    id="childDialog"
+    class="app-dialog"
+  >
+
+    <form
+      id="childForm"
+      class="dialog-content"
+      method="dialog"
+    >
+
+      <div class="dialog-header">
+
+        <div>
+          <p class="dialog-label">
+            NEW BRANCH
+          </p>
+
+          <h2>
+            新しい枝を追加
+          </h2>
+        </div>
+
+        <button
+          type="button"
+          id="closeChildDialogBtn"
+          class="icon-button"
+          aria-label="ダイアログを閉じる"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="childTitleInput">
+          新しい項目名
+        </label>
+
+        <input
+          type="text"
+          id="childTitleInput"
+          maxlength="30"
+          autocomplete="off"
+          placeholder="例：音楽、映画、就職活動"
+        >
+
+      </div>
+
+
+      <div class="dialog-actions">
+
+        <button
+          type="button"
+          id="cancelChildBtn"
+          class="dialog-cancel-button"
+        >
+          キャンセル
+        </button>
+
+        <button
+          type="submit"
+          class="dialog-submit-button"
+        >
+          枝を追加
+        </button>
+
+      </div>
+
+    </form>
+
+  </dialog>
+
+
+  <!-- =========================
+       初期化確認ダイアログ
+  ========================== -->
+
+  <dialog
+    id="resetDialog"
+    class="app-dialog"
+  >
+
+    <div class="dialog-content">
+
+      <div class="dialog-header">
+
+        <div>
+          <p class="dialog-label">
+            RESET MAP
+          </p>
+
+          <h2>
+            マップを初期化しますか？
+          </h2>
+        </div>
+
+      </div>
+
+      <p class="dialog-description">
+        追加した項目とメモがすべて削除され、
+        最初の状態に戻ります。この操作は取り消せません。
+      </p>
+
+      <div class="dialog-actions">
+
+        <button
+          type="button"
+          id="cancelResetBtn"
+          class="dialog-cancel-button"
+        >
+          キャンセル
+        </button>
+
+        <button
+          type="button"
+          id="confirmResetBtn"
+          class="dialog-danger-button"
+        >
+          初期化する
+        </button>
+
+      </div>
+
+    </div>
+
+  </dialog>
+
+
+  <!-- =========================
+       トースト通知
+  ========================== -->
+
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+  >
+    保存しました
+  </div>
 
 </body>
 </html>

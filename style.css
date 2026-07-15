@@ -1,216 +1,889 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ==================================================
+   Movin' On
+   Main Website
+================================================== */
+
+
+/* ==================================================
+   1. 基本設定
+================================================== */
+
+:root {
+    --background: #eaeae7;
+    --surface: #ffffff;
+    --surface-soft: #f5f5f2;
+    --surface-dark: #e8e8e4;
+
+    --text-main: #1d1d1b;
+    --text-body: #3f3f3b;
+    --text-sub: #6d6d67;
+    --text-light: #969690;
+
+    --line: #d5d5cf;
+    --line-dark: #aaa9a2;
+
+    --black: #1d1d1b;
+    --black-soft: #353532;
+
+    --header-height: 80px;
+
+    --shadow-soft:
+        0 10px 35px rgba(20, 20, 18, 0.055);
+
+    --shadow-hover:
+        0 18px 45px rgba(20, 20, 18, 0.085);
+
+    --transition:
+        220ms ease;
 }
 
-html{
-    scroll-behavior:smooth;
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-body{
-    font-family:"Yu Gothic","Hiragino Sans",sans-serif;
-    background:#f4f4f4;
-    color:#333;
+
+html {
+    scroll-behavior: smooth;
 }
 
-/* ==========================
-   ヘッダー
-========================== */
 
-header{
-    height:80px;
-    background:#4a4a4a;
+body {
+    min-width: 320px;
+    margin: 0;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    color: var(--text-main);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 0.85),
+            transparent 36rem
+        ),
+        var(--background);
 
-    position:sticky;
-    top:0;
-    z-index:100;
+    font-family:
+        "Helvetica Neue",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        "YuGothic",
+        sans-serif;
 
-    box-shadow:0 3px 10px rgba(0,0,0,.15);
-
-    /* スクロールバー */
-
-#progress-container{
-    position:fixed;
-    top:90px;       /* headerの高さ */
-    left:0;
-    width:100%;
-    height:5px;
-    background:#ddd;
-    z-index:1000;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
-#progress-bar{
-    width:0%;
-    height:100%;
-    background:#5f8dd3;
-    transition:width .15s linear;
-}
+
+a {
+    color: inherit;
 }
 
-.title{
-    color:white;
-    text-decoration:none;
-    font-size:2.2rem;
-    font-weight:bold;
-    letter-spacing:4px;
-    transition:.3s;
+
+img {
+    display: block;
+    max-width: 100%;
 }
 
-.title:hover{
-    opacity:.7;
+
+p,
+h1,
+h2,
+h3 {
+    text-wrap: pretty;
 }
 
-/* ==========================
-   メイン画像
-========================== */
 
-.hero{
-    width:100%;
-    height:350px;
-    overflow:hidden;
+/* ==================================================
+   2. ヘッダー
+================================================== */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: var(--header-height);
+
+    background: rgba(29, 29, 27, 0.95);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.14);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 }
 
-.hero img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+
+.title {
+    color: #ffffff;
+
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-decoration: none;
+
+    transition:
+        opacity var(--transition),
+        letter-spacing var(--transition);
 }
 
-/* ==========================
-   メイン
-========================== */
 
-main{
-    max-width:1000px;
-    margin:50px auto;
-    padding:0 20px;
+.title:hover {
+    opacity: 0.72;
+    letter-spacing: 0.16em;
 }
 
-/* ==========================
-   セクション
-========================== */
 
-section{
-    background:white;
-    margin-bottom:40px;
-    padding:40px;
+/* ==================================================
+   3. スクロール進捗バー
+================================================== */
 
-    border-radius:12px;
+#progress-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
 
-    box-shadow:0 6px 15px rgba(0,0,0,.08);
+    width: 100%;
+    height: 3px;
 
-    scroll-margin-top:110px;
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.14);
 }
 
-/* ==========================
-   見出し
-========================== */
 
-h2{
-    font-size:2rem;
-    margin-bottom:25px;
+#progress-bar {
+    width: 0;
+    height: 100%;
 
-    border-left:8px solid #4a4a4a;
-    padding-left:15px;
+    background: #ffffff;
+
+    transform-origin: left center;
+
+    transition:
+        width 80ms linear;
 }
 
-h3{
-    margin-top:40px;
-    margin-bottom:15px;
 
-    font-size:1.3rem;
+/* ==================================================
+   4. メインビジュアル
+================================================== */
 
-    border-bottom:2px solid #ddd;
-    padding-bottom:8px;
+.hero {
+    position: relative;
+
+    width: 100%;
+    height: clamp(280px, 43vw, 480px);
+
+    overflow: hidden;
+
+    background: #d4d4d0;
 }
 
-/* ==========================
-   本文
-========================== */
 
-p{
-    line-height:2;
-    font-size:17px;
-    margin-bottom:20px;
-    text-align:justify;
+.hero::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.02),
+            rgba(0, 0, 0, 0.18)
+        );
+
+    pointer-events: none;
 }
 
-/* ==========================
-   画像
-========================== */
+/* ==================================================
+   5. メインレイアウト
+================================================== */
 
-section img{
-    width:100%;
-    margin-top:25px;
-    border-radius:10px;
+main {
+    width:
+        min(920px, calc(100% - 40px));
+
+    margin:
+        clamp(40px, 7vw, 72px)
+        auto
+        120px;
 }
 
-/* ==========================
-   目次
-========================== */
 
-.toc h2{
-    margin-bottom:20px;
+/* ==================================================
+   6. セクション
+================================================== */
+
+section {
+    position: relative;
+
+    margin-bottom: 42px;
+    padding:
+        clamp(38px, 6vw, 68px)
+        clamp(28px, 7vw, 72px);
+
+    background:
+        rgba(255, 255, 255, 0.96);
+
+    border:
+        1px solid rgba(29, 29, 27, 0.07);
+
+    border-radius: 5px;
+
+    box-shadow:
+        var(--shadow-soft);
+
+    scroll-margin-top:
+        calc(var(--header-height) + 28px);
+
+    transition:
+        box-shadow var(--transition);
 }
 
-.toc ol{
-    padding-left:25px;
+
+section:hover {
+    box-shadow:
+        var(--shadow-hover);
 }
 
-.toc li{
-    margin:15px 0;
+
+/* ==================================================
+   7. セクションラベル
+================================================== */
+
+.section-label {
+    max-width: none;
+    margin: 0 0 13px;
+
+    color: var(--text-light);
+
+    font-family:
+        "Helvetica Neue",
+        sans-serif;
+
+    font-size: 0.67rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.22em;
 }
 
-.toc a{
-    text-decoration:none;
-    color:#444;
-    font-size:18px;
-    transition:.25s;
+
+/* ==================================================
+   8. 見出し
+================================================== */
+
+h2 {
+    margin: 0 0 40px;
+
+    color: var(--text-main);
+
+    font-size:
+        clamp(1.75rem, 3.5vw, 2.3rem);
+
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.015em;
 }
 
-.toc a:hover{
-    color:#5b87b2;
-    padding-left:8px;
+
+h2::after {
+    content: "";
+
+    display: block;
+
+    width: 52px;
+    height: 2px;
+    margin-top: 18px;
+
+    background: var(--black);
 }
 
-/* ==========================
-   スマホ対応
-========================== */
 
-@media (max-width:768px){
+h3 {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
 
-    header{
-        height:70px;
+    margin: 0 0 26px;
+
+    color: var(--text-main);
+
+    font-size:
+        clamp(1.17rem, 2vw, 1.42rem);
+
+    font-weight: 600;
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+}
+
+
+h3 span {
+    flex: 0 0 auto;
+
+    color: var(--text-light);
+
+    font-family:
+        "Helvetica Neue",
+        sans-serif;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+}
+
+
+/* ==================================================
+   9. 本文
+================================================== */
+
+p {
+    max-width: 40em;
+    margin: 0 0 1.45em;
+
+    color: var(--text-body);
+
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 2;
+    letter-spacing: 0.025em;
+
+    text-align: left;
+}
+
+
+section > p:last-child,
+.article-block > p:last-child {
+    margin-bottom: 0;
+}
+
+
+.section-introduction {
+    margin-bottom: 40px;
+
+    color: var(--text-main);
+
+    font-size: 1.04rem;
+    font-weight: 500;
+    line-height: 2.05;
+}
+
+
+/* ==================================================
+   10. 記事項目
+================================================== */
+
+.article-block {
+    position: relative;
+
+    margin-top: 34px;
+    padding: 38px 38px 36px;
+
+    background:
+        var(--surface-soft);
+
+    border:
+        1px solid rgba(29, 29, 27, 0.07);
+
+    border-radius: 3px;
+}
+
+
+.article-block + .article-block {
+    margin-top: 26px;
+}
+
+
+.article-block::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 3px;
+    height: 100%;
+
+    background:
+        var(--black);
+}
+
+
+.article-block p {
+    color: #444440;
+}
+
+
+/* ==================================================
+   11. 注釈
+================================================== */
+
+.note {
+    margin: 30px 0;
+    padding: 22px 24px;
+
+    color: var(--text-body);
+    background: var(--surface-soft);
+
+    border-left:
+        3px solid var(--black);
+
+    font-size: 0.92rem;
+    line-height: 1.95;
+}
+
+
+/* ==================================================
+   12. 重要メッセージ
+================================================== */
+
+.key-message {
+    max-width: 100%;
+    margin: 30px 0 4px;
+    padding: 22px 24px;
+
+    color: var(--text-main);
+    background: #ffffff;
+
+    border-top:
+        1px solid var(--black);
+
+    border-bottom:
+        1px solid var(--black);
+
+    font-weight: 600;
+    line-height: 1.9;
+}
+
+
+/* ==================================================
+   13. 目次
+================================================== */
+
+.toc-section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+
+.toc ol {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+    counter-reset: toc-counter;
+}
+
+
+.toc li {
+    counter-increment: toc-counter;
+
+    border-top:
+        1px solid var(--line);
+}
+
+
+.toc li:last-child {
+    border-bottom:
+        1px solid var(--line);
+}
+
+
+.toc a {
+    display: grid;
+    grid-template-columns:
+        46px 1fr auto;
+    align-items: center;
+    gap: 10px;
+
+    min-height: 64px;
+    padding: 0 6px;
+
+    color: var(--text-main);
+
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+
+    transition:
+        padding var(--transition),
+        color var(--transition),
+        background var(--transition);
+}
+
+
+.toc a::before {
+    content:
+        counter(
+            toc-counter,
+            decimal-leading-zero
+        );
+
+    color: var(--text-light);
+
+    font-family:
+        "Helvetica Neue",
+        sans-serif;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+
+.toc a::after {
+    content: "↓";
+
+    color: var(--text-light);
+
+    font-size: 0.85rem;
+
+    transition:
+        transform var(--transition),
+        color var(--transition);
+}
+
+
+.toc a:hover {
+    padding-right: 15px;
+    padding-left: 15px;
+
+    color: #000000;
+    background: var(--surface-soft);
+}
+
+
+.toc a:hover::after {
+    color: var(--black);
+
+    transform:
+        translateY(4px);
+}
+
+
+/* ==================================================
+   14. 自己探究マップリンク
+================================================== */
+
+.map-link {
+    margin-top: 44px;
+}
+
+
+.map-link a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    min-height: 76px;
+    padding: 0 28px;
+
+    color: #ffffff;
+    background: var(--black);
+
+    border:
+        1px solid var(--black);
+
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+
+    transition:
+        color var(--transition),
+        background var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+
+.map-link a span:last-child {
+    font-size: 1.35rem;
+
+    transition:
+        transform var(--transition);
+}
+
+
+.map-link a:hover {
+    color: var(--black);
+    background: #ffffff;
+
+    box-shadow:
+        0 12px 28px
+        rgba(20, 20, 18, 0.09);
+
+    transform:
+        translateY(-3px);
+}
+
+
+.map-link a:hover span:last-child {
+    transform:
+        translateX(7px);
+}
+
+
+/* ==================================================
+   15. About
+================================================== */
+
+#about {
+    background:
+        var(--black);
+}
+
+
+#about .section-label,
+#about p {
+    color:
+        rgba(255, 255, 255, 0.68);
+}
+
+
+#about h2 {
+    color: #ffffff;
+}
+
+
+#about h2::after {
+    background: #ffffff;
+}
+
+
+/* ==================================================
+   16. 選択時の表示
+================================================== */
+
+::selection {
+    color: #ffffff;
+    background: var(--black);
+}
+
+
+/* ==================================================
+   17. スクロールバー
+================================================== */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #b6b6b0;
+
+    border: 3px solid var(--background);
+    border-radius: 999px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #85857f;
+
+    border:
+        3px solid var(--background);
+}
+
+
+/* ==================================================
+   18. タブレット
+================================================== */
+
+@media (max-width: 900px) {
+
+    main {
+        width:
+            min(850px, calc(100% - 30px));
     }
 
-    .title{
-        font-size:1.8rem;
+    section {
+        padding:
+            46px
+            clamp(28px, 6vw, 52px);
     }
 
-    .hero{
-        height:220px;
-    }
-
-    section{
-        padding:25px;
-    }
-
-    h2{
-        font-size:1.6rem;
-    }
-
-    h3{
-        font-size:1.2rem;
-    }
-
-    p{
-        font-size:16px;
+    .article-block {
+        padding:
+            34px 32px 32px;
     }
 
 }
 
+
+/* ==================================================
+   19. スマートフォン
+================================================== */
+
+@media (max-width: 700px) {
+
+    :root {
+        --header-height: 68px;
+    }
+
+
+    .title {
+        font-size: 1.55rem;
+    }
+
+
+    .hero {
+        height: 240px;
+    }
+
+
+    main {
+        width:
+            calc(100% - 24px);
+
+        margin:
+            28px auto 70px;
+    }
+
+
+    section {
+        margin-bottom: 22px;
+        padding: 31px 23px;
+
+        border-radius: 3px;
+    }
+
+
+    section:hover {
+        box-shadow:
+            var(--shadow-soft);
+    }
+
+
+    .section-label {
+        margin-bottom: 11px;
+
+        font-size: 0.62rem;
+    }
+
+
+    h2 {
+        margin-bottom: 31px;
+
+        font-size: 1.6rem;
+    }
+
+
+    h2::after {
+        width: 42px;
+        margin-top: 14px;
+    }
+
+
+    h3 {
+        gap: 11px;
+
+        font-size: 1.12rem;
+    }
+
+
+    p {
+        font-size: 0.95rem;
+        line-height: 1.95;
+        letter-spacing: 0.018em;
+    }
+
+
+    .section-introduction {
+        margin-bottom: 31px;
+
+        font-size: 0.98rem;
+    }
+
+
+    .article-block {
+        margin-top: 23px;
+        padding: 29px 21px 27px;
+    }
+
+
+    .article-block + .article-block {
+        margin-top: 18px;
+    }
+
+
+    .note,
+    .key-message {
+        padding: 18px;
+    }
+
+
+    .toc a {
+        grid-template-columns:
+            38px 1fr auto;
+
+        min-height: 59px;
+
+        font-size: 0.91rem;
+    }
+
+
+    .toc a:hover {
+        padding-right: 8px;
+        padding-left: 8px;
+
+        background: transparent;
+    }
+
+
+    .map-link a {
+        min-height: 68px;
+        padding: 0 20px;
+
+        font-size: 0.92rem;
+    }
+
+}
+
+
+/* ==================================================
+   20. 動きを抑える設定
+================================================== */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+
+    *,
+    *::before,
+    *::after {
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+
+}
