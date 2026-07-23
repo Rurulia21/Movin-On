@@ -285,7 +285,74 @@ textarea:focus-visible,
 
 .toolbar-actions {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
+}
+
+.zoom-controls {
+  display: flex;
+  align-items: center;
+
+  height: 38px;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.zoom-button {
+  display: grid;
+  place-items: center;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+
+  font-size: 19px;
+  line-height: 1;
+
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.zoom-button:hover {
+  color: #ffffff;
+  background: var(--black);
+}
+
+.zoom-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.zoom-button:disabled:hover {
+  color: inherit;
+  background: transparent;
+}
+
+.zoom-value {
+  min-width: 54px;
+
+  color: var(--text-sub);
+
+  font-size: 11px;
+  font-weight: 650;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+
+  user-select: none;
 }
 
 .toolbar-button {
@@ -1272,10 +1339,15 @@ textarea:focus-visible,
 
   .toolbar-actions {
     width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .zoom-controls {
+    flex: 1 1 145px;
   }
 
   .toolbar-button {
-    flex: 1;
+    flex: 1 1 auto;
     padding: 0 10px;
   }
 

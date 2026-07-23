@@ -185,13 +185,23 @@ header {
     position: relative;
 
     width: 100%;
-    height: clamp(280px, 43vw, 480px);
+    height: auto;
 
     overflow: hidden;
 
     background: #d4d4d0;
 }
 
+.hero img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-width: none;
+
+    object-fit: contain;
+}
 
 .hero::after {
     content: "";
@@ -744,12 +754,6 @@ section > p:last-child,
     .title {
         font-size: 1.55rem;
     }
-
-
-    .hero {
-        height: 240px;
-    }
-
 
     main {
         width:
